@@ -1,0 +1,30 @@
+<head>
+  <title>GRITS Study</title>
+</head>
+
+<body>
+  <div id="outer">
+    {{> main}}
+  </div>
+</body>
+<template name="main">
+    {{#if article}}
+      <h4>Article:</h4>
+      <pre class="article">{{article.text}}</pre>
+      {{#if showDashboard}}
+        <a href="https://grits.ecohealth.io/dash/{{article.dashboardId}}" target="_blank">Dashboard</a>
+      {{/if}}
+      {{#if task}}
+        <div class="task">
+          <h4>Task:</h4>
+          <p>{{task}}</p>
+          <textarea id="task-result"></textarea>
+        </div>
+        <button class="next">Next Task</button>
+      {{else}}
+        <button class="next-article">Next Article</button>
+      {{/if}}
+    {{else}}
+      <h3>Thank you!</h3> You completed all the tasks.
+    {{/if}}
+</template>
