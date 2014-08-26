@@ -2,29 +2,35 @@
   <title>GRITS Study</title>
 </head>
 
-<body>
-  <div id="outer">
-    {{> main}}
-  </div>
-</body>
 <template name="main">
-    {{#if article}}
-      <h4>Article:</h4>
-      <pre class="article">{{article.text}}</pre>
-      {{#if showDashboard}}
-        <a href="https://grits.ecohealth.io/dash/{{article.dashboardId}}" target="_blank">Dashboard</a>
-      {{/if}}
-      {{#if task}}
-        <div class="task">
-          <h4>Task:</h4>
-          <p>{{task}}</p>
-          <textarea id="task-result"></textarea>
-        </div>
-        <button class="next">Next Task</button>
+  <div id="outer">
+    {{#unless completed}}
+      {{#if article}}
+        {{#if task}}
+          <div class="task">
+            <h4>Task:</h4>
+            <p>{{task}}</p>
+            <textarea id="task-result"></textarea>
+          </div>
+          <button class="next">Next Task</button>
+        {{else}}
+          <button class="next-article">Next Article</button>
+        {{/if}}
+        {{#if showDashboard}}
+          <a href="https://grits.ecohealth.io/dash/{{article.dashboardId}}?showKeypoints=true" target="_blank">Open article</a>
+        {{else}}
+          <a href="/showArticle/{{article.idx}}" target="_blank">Open article</a>
+        {{/if}}
       {{else}}
-        <button class="next-article">Next Article</button>
+        <h3>Loading...</h3>
       {{/if}}
     {{else}}
       <h3>Thank you!</h3> You completed all the tasks.
-    {{/if}}
+    {{/unless}}
+  </div>
+</template>
+<template name="showArticle">
+  <div id="outer">
+    <pre class="article">{{text}}</pre>
+  </div>
 </template>
