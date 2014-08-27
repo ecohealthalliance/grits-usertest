@@ -6,6 +6,17 @@
   <div id="outer">
     {{#unless completed}}
       {{#if article}}
+        <a
+          href="{{articleLink article}}"
+          class="{{#unless task}}next-article{{/unless}}"
+          target="_blank"
+        >
+          {{#if task}}
+            Reopen the article
+          {{else}}
+            Open the {{#if article.idx}}next{{/if}} article in a separate window
+          {{/if}}
+        </a>
         {{#if task}}
           <div class="task">
             <h4>Task:</h4>
@@ -13,13 +24,6 @@
             <textarea id="task-result"></textarea>
           </div>
           <button class="next">Next Task</button>
-        {{else}}
-          <button class="next-article">Next Article</button>
-        {{/if}}
-        {{#if showDashboard}}
-          <a href="https://grits.ecohealth.io/dash/{{article.dashboardId}}?showKeypoints=true" target="_blank">Open article</a>
-        {{else}}
-          <a href="/showArticle/{{article.idx}}" target="_blank">Open article</a>
         {{/if}}
       {{else}}
         <h3>Loading...</h3>
