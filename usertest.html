@@ -6,21 +6,36 @@
   <div id="outer">
     {{#unless completed}}
       {{#if article}}
-        <a
-          href="{{articleLink article}}"
-          class="{{#unless task}}next-article{{/unless}}"
-          target="_blank"
-        >
-          {{#if task}}
+        
+        {{#if task}}
+          <a
+            href="{{articleLink article}}"
+            class="{{#unless task}}next-article{{/unless}}"
+            target="_blank"
+          >
             Reopen the article
-          {{else}}
-            Open the {{#if article.idx}}next{{/if}} article in a separate window
-          {{/if}}
-        </a>
+          </a>
+        {{else}}
+          <a
+            href="{{articleLink article}}"
+            class="{{#unless task}}next-article{{/unless}}"
+            target="_blank"
+          >
+            Clicking this link will open an article in
+            {{#if showDashboard}}
+              the GRITS Diagnostic Dashboard
+            {{else}}
+              a separate window
+            {{/if}}
+            and start the survey.
+          </a>
+        {{/if}}
+        
         {{#if task}}
           <div class="task">
             <h4>Task:</h4>
             <p>{{task}}</p>
+            <small>Please make your response as thorough and precise as possible, and explain your reasoning.</small>
             <textarea id="task-result"></textarea>
           </div>
           <button class="next">Next Task</button>

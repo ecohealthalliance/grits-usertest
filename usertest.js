@@ -71,6 +71,7 @@ if (Meteor.isClient) {
       return user.articleIdx !== 1;
     }
   };
+  Template.main.showDashboard = showDashboard;
   
   var showKeypoints = function () {
     var user = Session.get('user');
