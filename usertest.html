@@ -10,25 +10,32 @@
         {{#if task}}
           <a
             href="{{articleLink article}}"
-            class="{{#unless task}}next-article{{/unless}}"
             target="_blank"
           >
             Reopen the article
           </a>
         {{else}}
-          <a
-            href="{{articleLink article}}"
-            class="{{#unless task}}next-article{{/unless}}"
-            target="_blank"
-          >
-            Clicking this link will open an article in
+            Clicking the link below will open an article in
             {{#if showDashboard}}
               the GRITS Diagnostic Dashboard
             {{else}}
               a separate window
             {{/if}}
             and start the survey.
-          </a>
+            {{#if showDashboard}}
+              You should only use the diagnostic dashboard and articles it links to
+              in order to answer the questions.
+            {{else}}
+              You may use any electronic resources you wish to answer the survey's questions,
+              (e.g. search engines or online knowledge bases).
+              However, you should not use the GRITS Diagnostic Dashboard.
+            {{/if}}
+          <br />
+          <a
+            href="{{articleLink article}}"
+            class="next-article"
+            target="_blank"
+          >Start</a>
         {{/if}}
         
         {{#if task}}
