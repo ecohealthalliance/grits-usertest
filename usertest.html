@@ -56,7 +56,14 @@
   </div>
 </template>
 <template name="showArticle">
+  <div id="article-container">
+    <article class="article">{{text}}</article>
+  </div>
+</template>
+<template name="submissions">
   <div id="outer">
-    <pre class="article">{{text}}</pre>
+    {{#each submissions}}
+      <article class="article">{{text}}</article>
+    {{/each}}
   </div>
 </template>

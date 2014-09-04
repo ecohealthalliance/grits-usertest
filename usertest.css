@@ -3,11 +3,6 @@ body {
     font-weight: 200;
     margin: 50px 0;
     padding: 0;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
 }
 
 #outer {
@@ -17,4 +12,11 @@ body {
 
 .article {
     white-space: pre-wrap;
+    padding: 1em;
+    background-color: #EFEFEF;
+}
+#article-container {
+    width: 600px;
+    margin: 0 auto;
+    background-color: black;
 }

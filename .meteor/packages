@@ -7,4 +7,5 @@ standard-app-packages
 insecure
 yml
 iron-router
-autopublish
+accounts-password
+accounts-ui

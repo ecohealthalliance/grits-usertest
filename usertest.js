@@ -10,7 +10,7 @@ A numerical value that determines which articles to show the
 dashboard and keypoints for.
 */
 Submissions = new Meteor.Collection("submissions");
-Users = new Meteor.Collection("users");
+Subjects = new Meteor.Collection("Subjects");
 Articles = new Meteor.Collection("articles");
 var tasks = [
   "Identify the disease(s) reported on in the article.",
@@ -33,12 +33,12 @@ Router.map(function() {
       }
       var userName = this.params.user;
       var condition = this.params.condition;
-        Meteor.subscribe("users", {
+        Meteor.subscribe("Subjects", {
         onReady : function() {
           Deps.autorun(function() {
-            var user = Users.findOne({userName : userName});
+            var user = Subjects.findOne({userName : userName});
             if (!user) {
-              Users.insert({
+              Subjects.insert({
                 userName : userName,
                 taskIdx : -1,
                 articleIdx : 0,
@@ -58,9 +58,25 @@ Router.map(function() {
       return Articles.findOne({'idx' : Number(this.params.idx)});
     }
   });
+  this.route('submissions', {
+    path: '/submissions',
+    data: function(){
+      return { 
+        submissions : Submissions.find().map(function(x){
+          return {
+            text : _.map(x, function(value, key){
+              return key + ": " + value;
+            }).join('\n')
+          };
+        })
+      };
+    }
+  });
 });
 
 if (Meteor.isClient) {
+  Meteor.subscribe('articles');
+  Meteor.subscribe('submissions');
   var taskStart = new Date();
   
   var showDashboard = function () {
@@ -122,7 +138,6 @@ if (Meteor.isClient) {
         "You will not be able to return to this task."
       )) {
         var user = Session.get('user');
-        //TODO: Submit
         Submissions.insert({
           userId : user._id,
           userName : user.userName,
@@ -132,24 +147,26 @@ if (Meteor.isClient) {
           showKeypoints : showKeypoints(),
           taskStart : taskStart,
           taskIdx : user.taskIdx,
+          taskText : tasks[user.taskIdx],
           articleIdx : user.articleIdx,
+          articleLink : Articles.findOne({'idx' : user.articleIdx}).url,
           taskResult : $('#task-result').val()
         });
         $('#task-result').val('');
         taskStart = new Date();
         if(user.taskIdx + 1 >= tasks.length) {
-          Users.update(Session.get('user')._id, {
+          Subjects.update(Session.get('user')._id, {
             $inc: { articleIdx : 1 },
             $set: { taskIdx : -1 }
           });
         } else {
-          Users.update(user._id, {$inc: { taskIdx : 1 }});
+          Subjects.update(user._id, {$inc: { taskIdx : 1 }});
         }
       }
     },
     'click .next-article': function () {
       taskStart = new Date();
-      Users.update(Session.get('user')._id, {
+      Subjects.update(Session.get('user')._id, {
         $set: { taskIdx : 0 }
       });
     }
@@ -169,7 +186,16 @@ if (Meteor.isServer) {
       console.log(e);
     }
   });
-  Meteor.publish("users", function(){
-    return Users.find();
+  Meteor.publish("Subjects", function(){
+    return Subjects.find();
+  });
+  Meteor.publish('articles',function(){
+    return Articles.find();
+  });
+  Meteor.publish("submissions", function(){
+    var user = Meteor.users.findOne(this.userId);
+    if(!user) return [];
+    if(user.username !== "admin") return [];
+    return Submissions.find();
   });
 }
