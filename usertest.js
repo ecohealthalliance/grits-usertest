@@ -20,7 +20,7 @@ var tasks = [
   "Which host organisms have the potential to spread the reported disease(s)? Are you aware of any that were not reported in the article?",
   "Which demographics are at risk of contracting the reported disease(s)? Are you aware of any that were not reported in the article?",
   "What are the risk factors for contracting the reported disease(s)? Are you aware of any that were not reported in the article?",
-  "Estimate the number of infections that will occur within 30 days of the article's publication."
+  "Relative to other infectious disease events you have learned about, how much of a threat is posed by the events reported in this article?"
 ];
 
 Router.map(function() {

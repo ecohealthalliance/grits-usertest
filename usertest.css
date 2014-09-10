@@ -20,3 +20,7 @@ body {
     margin: 0 auto;
     background-color: black;
 }
+#task-result {
+    width: 500px;
+	height: 120px;
+}
